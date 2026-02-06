@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For Monu | From Dharya (London)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+body{min-height:100vh;background:linear-gradient(135deg,#FFE5EC 0%,#FFC2D1 50%,#C77DFF 100%);display:flex;align-items:center;justify-content:center;overflow-x:hidden;position:relative}
+.cat{position:fixed;font-size:60px;animation:float 15s infinite;opacity:0.15}
+.cat1{top:10%;left:5%}
+.cat2{bottom:15%;right:8%;animation-delay:3s}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-30px) rotate(10deg)}}
+.container{width:min(95vw,850px);position:relative}
+.card{background:rgba(255,251,245,0.95);border-radius:28px;padding:clamp(20px,4vw,35px);box-shadow:0 20px 60px rgba(0,0,0,0.2);position:relative;overflow:hidden}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.badge{background:linear-gradient(135deg,#C77DFF,#84A7DC);color:#fff;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:600}
+.distance{font-size:11px;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:15px;color:#333}
+.dots{display:flex;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,0.2);transition:all 0.3s}
+.dot.active{background:#E63946;transform:scale(1.2)}
+.content{min-height:480px}
+.page{display:none;animation:fadeIn 0.4s}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+h1{font-size:clamp(26px,5vw,42px);color:#2D3142;margin-bottom:15px;line-height:1.2}
+h2{font-size:clamp(18px,3.5vw,26px);color:#2D3142;margin:20px 0 10px}
+p{font-size:15px;color:#555;line-height:1.6;margin-bottom:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:15px;margin:20px 0}
+.box{background:#fff;padding:18px;border-radius:18px;box-shadow:0 6px 20px rgba(0,0,0,0.08);transition:all 0.3s;position:relative}
+.box:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(230,57,70,0.15)}
+.box h3{font-size:17px;color:#2D3142;margin-bottom:8px}
+.box p{font-size:14px;color:#666}
+.icon{position:absolute;top:10px;right:10px;font-size:28px;opacity:0.25}
+.timeline{background:#fff;padding:20px;border-radius:18px;margin:20px 0;box-shadow:0 6px 20px rgba(0,0,0,0.08)}
+.timeline-item{display:flex;gap:12px;margin:12px 0;padding-bottom:12px;border-bottom:1px dashed#ddd}
+.timeline-item:last-child{border:none}
+.timeline-date{font-weight:600;color:#E63946;min-width:110px;font-size:14px}
+.timeline-text{color:#666;font-size:14px}
+.secret-box{background:linear-gradient(135deg,#fff,#FFE5EC);padding:20px;border-radius:18px;margin:20px 0;border:2px dashed#E63946;position:relative}
+.secret-box.locked .text{filter:blur(8px);user-select:none}
+.input-box{width:100%;max-width:380px;padding:12px 18px;border:2px solid#C77DFF;border-radius:25px;font-size:15px;outline:none;margin:15px 0}
+.input-box:focus{border-color:#E63946;box-shadow:0 0 0 4px rgba(230,57,70,0.1)}
+.unlock-btn{background:#E63946;color:#fff;border:none;padding:12px 22px;border-radius:25px;font-weight:600;cursor:pointer;margin-top:12px}
+.unlock-btn:hover{background:#C82333;transform:scale(1.05)}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:20px 0}
+.choice{background:#fff;padding:18px;border-radius:18px;border:3px solid transparent;cursor:pointer;text-align:center;transition:all 0.3s}
+.choice:hover{transform:translateY(-3px);border-color:#C77DFF}
+.choice.selected{border-color:#E63946;background:linear-gradient(135deg,#FFE5EC,#fff);box-shadow:0 8px 20px rgba(230,57,70,0.2)}
+.choice-icon{font-size:36px;margin-bottom:8px}
+.choice-title{font-size:16px;font-weight:600;color:#2D3142;margin-bottom:4px}
+.choice-desc{font-size:12px;color:#777}
+.question-area{background:linear-gradient(135deg,rgba(255,229,236,0.6),rgba(199,125,255,0.3));padding:35px;border-radius:22px;margin:25px 0;text-align:center;position:relative;min-height:220px}
+.btn-container{display:flex;gap:18px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:25px;position:relative;height:90px}
+.btn{padding:14px 32px;border:none;border-radius:28px;font-size:17px;font-weight:600;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.15);position:relative;transition:all 0.3s}
+.btn-yes{background:linear-gradient(135deg,#90EE90,#00C853);color:#fff}
+.btn-yes:hover{transform:scale(1.1);box-shadow:0 10px 25px rgba(0,200,83,0.4)}
+.btn-no{background:linear-gradient(135deg,#FF6B6B,#EE5A6F);color:#fff;position:absolute}
+.no-msg{margin-top:12px;font-size:13px;color:#E63946;font-weight:600;min-height:22px}
+.nav-buttons{display:flex;justify-content:space-between;margin-top:25px;gap:10px}
+.nav-btn{background:#fff;color:#2D3142;border:2px solid#C77DFF;padding:10px 18px;border-radius:18px;cursor:pointer;font-weight:600;transition:all 0.3s}
+.nav-btn:hover{background:#C77DFF;color:#fff}
+.celebration{text-align:center;padding:25px}
+.celebration-icon{font-size:70px;animation:bounce 1s infinite;margin:18px 0}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+.heart{position:fixed;pointer-events:none;font-size:22px;animation:heartFloat 3s ease-out forwards;z-index:9999}
+@keyframes heartFloat{to{transform:translateY(-100vh) rotate(360deg);opacity:0}}
+.stamp{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:8px 14px;border-radius:14px;background:#fff;border:1px dashed rgba(17,24,39,0.25);font-weight:700;font-size:14px}
+@media(max-width:600px){.grid,.choices{grid-template-columns:1fr}.question-area{padding:22px}h1{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="cat cat1">🐱</div>
+<div class="cat cat2">🎨</div>
+<div class="container">
+<div class="card">
+<div class="header">
+<div class="badge">💗 For Monu | From Dharya</div>
+<div class="distance">🌍 London → Pilani/Jaipur</div>
+<div class="dots" id="dots"></div>
+</div>
+<div class="content" id="content">
+<div class="page active">
+<h1>Hi Monu...</h1>
+<p>Tumhara naam Muskan hai par main tumhe Monu kehta hoon kyunki tumhari smile duniya ki sabse pyaari hai.😊</p><div class="grid"><div class="box"><span class="icon">💗</span><h3>London se India tak</h3><p>Main yahan MBA+job karta hoon par har pal tumhare baare me sochta hoon. Distance matter nahi karti.</p></div><div class="box"><span class="icon">🎨</span><h3>Artist Monu</h3><p>Tumhari paintings aur artwork sabse beautiful hai—tumhari creativity mujhe inspire karti hai.</p></div><div class="box"><span class="icon">🐹</span><h3>Hamster Ke Mom-Dad</h3><p>Hum hamster ke parents hain! Main dad hoon aur tum mom—cutest family ever.</p></div><div class="box"><span class="icon">❤️</span><h3>Har Pal</h3><p>Tum sochti ho main time kam deta hoon—par sach ye hai ki main har second tumhare baare me sochta hoon.</p></div></div><div class="timeline"><h3>📅 Humari Timeline</h3><div class="timeline-item"><div class="timeline-date">4 June 2003</div><div class="timeline-text">Duniya ki sabse pretty girl ka birthday! 🎉</div></div><div class="timeline-item"><div class="timeline-date">31 Oct 2022</div><div class="timeline-text">Hum officially saath aa gaye—2+ years of love! 💕</div></div><div class="timeline-item"><div class="timeline-date">14 Feb 2026</div><div class="timeline-text">Is Valentine pe... tumhe officially mera Valentine banana chahta hoon! 😊</div></div></div><div class="nav-buttons"><span></span><button class="nav-btn" onclick="show(1)">Next →</button></div></div><div class="page"><h1>Will you be my Valentine?</h1><h2>Monu, ek sawal...</h2><p>Main London me hoon, tum India me ho—par pyaar distance nahi dekhta. Will you officially be my Valentine?</p><div class="question-area"><div class="btn-container"><button class="btn btn-yes" id="yesBtn">Yes, Dharya! ❤️</button><button class="btn btn-no" id="noBtn">No</button></div><div class="no-msg" id="noMsg"></div></div><div class="nav-buttons"><button class="nav-btn" onclick="show(0)">← Back</button><span></span></div></div><div class="page"><div class="celebration"><div class="celebration-icon">🎉💕🎊</div><h1>Yayyy Monu!</h1><p style="font-size:18px;color:#E63946;font-weight:600">Tum meri Valentine ban gayi! Ab officially Monu+Dharya forever! 😍</p><div class="stamp">💌 Since 31 Oct 2022</div><p style="margin-top:20px;color:#666">Screenshot leke bhej dena mujhe! Love you Monu ❤️</p></div><div class="nav-buttons"><button class="nav-btn" onclick="show(1)">← Back</button><button class="nav-btn" onclick="heartsBurst()">More Hearts! 💗</button></div></div></div></div></div><script>const pages=document.querySelectorAll('.page');const dotsEl=document.getElementById('dots');let idx=0;function renderDots(){dotsEl.innerHTML='';pages.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i===idx?' active':'');dotsEl.appendChild(d)})}function show(i){idx=Math.max(0,Math.min(pages.length-1,i));pages.forEach((p,k)=>p.style.display=k===idx?'block':'none');renderDots()}renderDots();const noBtn=document.getElementById('noBtn');const yesBtn=document.getElementById('yesBtn');const noMsg=document.getElementById('noMsg');function moveNo(){if(!noBtn)return;const vw=Math.max(document.documentElement.clientWidth||0,window.innerWidth||0);const vh=Math.max(document.documentElement.clientHeight||0,window.innerHeight||0);const bw=noBtn.offsetWidth,bh=noBtn.offsetHeight;const x=Math.floor(Math.random()*(vw-bw-30))+15;const y=Math.floor(Math.random()*(vh-bh-30))+15;noBtn.style.left=x+'px';noBtn.style.top=y+'px';noBtn.style.transform='none';const msgs=['Monu please 😭','No button bhi dar gaya 😄','Ek baar soch lo na 😉','Dharya waiting... 💕'];noMsg.textContent=msgs[Math.floor(Math.random()*msgs.length)]}noBtn?.addEventListener('mouseenter',moveNo);noBtn?.addEventListener('touchstart',(e)=>{e.preventDefault();moveNo()},{passive:false});noBtn?.addEventListener('click',(e)=>{e.preventDefault();moveNo()});function heartsBurst(n=20){const hearts=['❤️','💗','💖','💞','💕'];for(let i=0;i<n;i++){const h=document.createElement('div');h.className='heart';h.textContent=hearts[Math.floor(Math.random()*hearts.length)];h.style.left=(Math.random()*100)+'vw';h.style.top=(65+Math.random()*15)+'vh';h.style.fontSize=(16+Math.random()*20)+'px';h.style.animationDelay=(Math.random()*0.2)+'s';document.body.appendChild(h);setTimeout(()=>h.remove(),3000)}}yesBtn?.addEventListener('click',()=>{heartsBurst(25);show(2)});</script></body></html>
