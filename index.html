@@ -2,149 +2,459 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Will you be my Valentine?</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Monu ❤️ Dharya</title>
   <style>
     :root{
-      --bg1:#ffdde1; --bg2:#ee9ca7; --card:#ffffffcc; --text:#222;
-      --yes:#22c55e; --no:#ef4444;
+      --bg1:#ffd1e8; --bg2:#8b5cf6; --card:#ffffffd9; --text:#111827;
+      --accent:#ec4899; --yes:#22c55e; --no:#ef4444; --muted:#6b7280;
     }
     *{box-sizing:border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;}
     body{
       margin:0; min-height:100vh; display:grid; place-items:center;
       background: radial-gradient(circle at top, var(--bg1), var(--bg2));
-      color:var(--text);
+      color:var(--text); overflow:hidden;
+    }
+    .wrap{width:min(860px, 94vw); position:relative;}
+    .card{
+      background:var(--card);
+      border:1px solid #ffffff90;
+      border-radius:28px;
+      padding:22px 18px;
+      box-shadow:0 18px 60px rgba(0,0,0,.18);
+      backdrop-filter: blur(10px);
+      position:relative;
       overflow:hidden;
     }
-    .card{
-      width:min(560px, 92vw);
-      background:var(--card);
-      backdrop-filter: blur(10px);
-      border:1px solid #ffffff80;
-      border-radius:24px;
-      padding:28px 20px;
-      box-shadow: 0 12px 40px rgba(0,0,0,.12);
-      text-align:center;
-      position:relative;
+    .topbar{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px; margin-bottom:10px;
     }
-    h1{margin:0 0 10px; font-size: clamp(24px, 3.8vw, 34px);}
-    p{margin:0 0 16px; opacity:.9}
-    .name{
-      font-weight:700;
-      background:#fff;
-      border:1px solid #0000001a;
-      border-radius:12px;
-      padding:10px 12px;
-      width:min(360px, 90%);
-      outline:none;
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      background:#fff; border:1px solid #00000014; border-radius:999px;
+      padding:6px 10px; font-size:13px; color:#111827; opacity:.95;
+      white-space:nowrap;
     }
-    .btns{
-      margin-top:18px;
-      display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
-      position:relative;
-      padding:22px 0 0;
+    .dots{display:flex; gap:6px; justify-content:flex-end; flex:1;}
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background:#ffffffb0; border:1px solid #0000001a;
+      opacity:.6;
+    }
+    .dot.on{opacity:1; background:var(--accent); border-color:transparent;}
+    h1{margin:8px 0 6px; font-size:clamp(24px, 4vw, 40px); letter-spacing:-.3px;}
+    h2{margin:0 0 10px; font-size:clamp(18px, 2.8vw, 24px);}
+    p{margin:0 0 10px; line-height:1.5; color:#1f2937;}
+    .muted{color:var(--muted); font-size:14px;}
+    .pages{position:relative; min-height:520px;}
+    .page{display:none; animation: pop .18s ease-out;}
+    .page.active{display:block;}
+    @keyframes pop{from{transform:translateY(6px); opacity:.0} to{transform:translateY(0); opacity:1}}
+    .nav{
+      margin-top:14px; display:flex; gap:10px; justify-content:space-between; flex-wrap:wrap;
     }
     button{
-      border:0; border-radius:999px; padding:12px 18px;
-      font-size:16px; cursor:pointer; color:white;
+      border:0; border-radius:999px; padding:12px 16px;
+      font-size:15px; cursor:pointer; user-select:none;
       transition: transform .12s ease, filter .12s ease;
-      user-select:none; -webkit-tap-highlight-color: transparent;
     }
-    #yesBtn{background:var(--yes)}
-    #yesBtn:hover{transform: translateY(-1px); filter:brightness(1.05)}
-    #noBtn{
-      background:var(--no);
+    button:hover{transform: translateY(-1px); filter:brightness(1.03);}
+    .btn-ghost{background:#ffffff; border:1px solid #00000014; color:#111827;}
+    .btn-next{background:#111827; color:#fff;}
+    .btn-accent{background:var(--accent); color:#fff;}
+    .btn-yes{background:var(--yes); color:#fff;}
+    .btn-no{background:var(--no); color:#fff;}
+
+    .grid{display:grid; gap:12px; grid-template-columns: repeat(12, 1fr); margin-top:10px;}
+    .box{
+      grid-column: span 6;
+      background:#fff; border:1px solid #00000012; border-radius:20px;
+      padding:14px 14px;
+    }
+    .box b{color:#111827}
+    .box.small{grid-column: span 4;}
+    @media (max-width:700px){
+      .box{grid-column: span 12;}
+      .box.small{grid-column: span 12;}
+      .pages{min-height:560px;}
+    }
+
+    .secret{
+      background:#fff;
+      border:1px solid #00000012;
+      border-radius:20px;
+      padding:14px;
+      position:relative;
+      overflow:hidden;
+      margin-top:10px;
+    }
+    .blur{
+      filter: blur(8px);
+      user-select:none;
+    }
+    .reveal{
+      position:absolute; inset:auto 14px 14px auto;
+      background:#111827; color:#fff; padding:10px 12px;
+      border-radius:999px; font-size:13px;
+    }
+
+    .choices{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
+    .choice{
+      flex:1;
+      min-width: 180px;
+      background:#fff;
+      border:1px solid #00000014;
+      border-radius:18px;
+      padding:12px 12px;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    .choice:hover{transform: translateY(-1px);}
+    .choice.on{border-color: var(--accent); box-shadow: 0 10px 26px rgba(236,72,153,.14);}
+    .choice .t{font-weight:800; margin-bottom:4px;}
+    .choice .d{font-size:13px; color:var(--muted); margin:0;}
+
+    .askArea{
+      margin-top:16px;
+      position:relative;
+      height:110px;
+      border-radius:22px;
+      background: rgba(255,255,255,.55);
+      border:1px solid #ffffff90;
+      overflow:hidden;
+    }
+    .askBtns{
       position:absolute;
       left:50%;
-      transform: translateX(80px);
+      top:22px;
+      transform: translateX(-50%);
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:center;
+      width:min(520px, 92%);
     }
-    .hint{margin-top:12px; font-size:14px; opacity:.85; min-height:20px;}
-    .celebrate{
-      margin-top:14px; font-size:18px; font-weight:700;
-      display:none;
+    #noBtn{
+      position:absolute;
+      left:50%;
+      top:22px;
+      transform: translateX(120px);
     }
+    .noteLine{margin-top:10px; min-height:22px; font-size:14px; color:var(--muted);}
+
     .heart{
-      position:fixed; font-size:18px; pointer-events:none; opacity:.9;
-      animation: floatUp 1.8s ease-in forwards;
+      position:fixed; pointer-events:none; opacity:.95;
+      animation: floatUp 2.2s ease-in forwards;
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,.12));
     }
     @keyframes floatUp{
-      from{transform: translate(-50%, 0) scale(1); opacity:.95}
-      to{transform: translate(-50%, -140px) scale(1.4); opacity:0}
+      from{transform: translate(-50%, 0) scale(.9); opacity:.95}
+      to{transform: translate(-50%, -240px) scale(1.45); opacity:0}
+    }
+    .stamp{
+      display:inline-flex; align-items:center; gap:8px;
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      background:#fff;
+      border:1px dashed rgba(17,24,39,.25);
+      font-weight:800;
+    }
+    .mini{font-size:13px; color:var(--muted); font-weight:600;}
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background:#fff;
+      border:1px solid #0000001a;
+      padding:6px 8px;
+      border-radius:10px;
+      font-size:13px;
+    }
+    .input{
+      width:min(420px, 96%);
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid #00000014;
+      outline:none;
+      font-size:15px;
+      background:#fff;
     }
   </style>
 </head>
 <body>
-  <div class="card" id="card">
-    <h1>Will you be my Valentine?</h1>
-    <p>Type your name (optional) and choose…</p>
+  <div class="wrap">
+    <div class="card">
+      <div class="topbar">
+        <div class="chip">Monu (Muskan) ❤️ Dharya</div>
+        <div class="dots" id="dots"></div>
+      </div>
 
-    <input class="name" id="nameInput" placeholder="Your name" maxlength="20" />
+      <div class="pages" id="pages">
 
-    <div class="btns" id="btnArea">
-      <button id="yesBtn" type="button">Yes</button>
-      <button id="noBtn" type="button" aria-label="No">No</button>
+        <section class="page active" data-title="Cover">
+          <h1>Hi Monu…</h1>
+          <p class="muted">Tumhara real name <b>Muskan</b> hai, par mere liye tum “Monu” ho—because tumhari smile se sab theek lagta hai.</p>
+
+          <div class="grid">
+            <div class="box">
+              <h2>Ek chhota sa surprise</h2>
+              <p>Ye website sirf tumhare liye hai. Isme kuch pages hain—thoda cute, thoda dramatic, aur bilkul <b>Dharya-style</b>.</p>
+              <p class="muted">Tip: last me “No” ko pakadna mushkil hoga 😄</p>
+            </div>
+            <div class="box">
+              <h2>Mini rule</h2>
+              <p>Jab tak tum yahan ho… bas ek cheez karna: apni smile lose mat karna.</p>
+              <div class="stamp">🎁 Monu Mode: ON <span class="mini">(tap Next)</span></div>
+            </div>
+          </div>
+
+          <div class="nav">
+            <span></span>
+            <button class="btn-next" data-go="next">Next</button>
+          </div>
+        </section>
+
+        <section class="page" data-title="Reasons">
+          <h1>3 cheezein jo mujhe tumme pasand hain</h1>
+          <p class="muted">Ye generic lines nahi—seedha dil se.</p>
+
+          <div class="grid">
+            <div class="box">
+              <h2>1) Tumhari Muskan</h2>
+              <p>Naam “Muskan” ho ya na ho—tumhari smile literally meri day ko reset kar deti hai.</p>
+            </div>
+            <div class="box">
+              <h2>2) Tumhara Monu वाला vibe</h2>
+              <p>Monu… ye naam bolte hi lagta hai ki life soft ho gayi—jaise winter me warm hoodie.</p>
+            </div>
+            <div class="box">
+              <h2>3) Tum + main = peace</h2>
+              <p>Main perfect nahi, par tumhare saath main better ban’na chahta hoon—daily, honestly.</p>
+            </div>
+            <div class="box">
+              <h2>Bonus (secret)</h2>
+              <p>Jab tum “haan” bolti ho na… mujhe lagta hai main kuch bhi kar sakta hoon.</p>
+            </div>
+          </div>
+
+          <div class="nav">
+            <button class="btn-ghost" data-go="back">Back</button>
+            <button class="btn-next" data-go="next">Next</button>
+          </div>
+        </section>
+
+        <section class="page" data-title="Secret">
+          <h1>Ek secret note 👀</h1>
+          <p class="muted">Isko reveal karne ke liye bas <span class="kbd">monu</span> type karo (lowercase).</p>
+
+          <input class="input" id="pass" placeholder="Type here: monu" maxlength="12" />
+          <div class="secret" id="secretBox" style="margin-top:12px;">
+            <div id="secretText" class="blur">
+              Monu (Muskan), main tumhe impress karne ke liye nahi—tumhe choose karne ke liye yahan hoon.
+              Tumhari respect, tumhari happiness, aur tumhara trust… ye mere liye sabse important hai.
+              Aur haan—main tumhare saath har Valentine ko “our tradition” banana chahta hoon.
+            </div>
+            <button class="reveal" id="revealBtn" type="button">Reveal</button>
+          </div>
+
+          <div class="nav">
+            <button class="btn-ghost" data-go="back">Back</button>
+            <button class="btn-next" data-go="next" id="nextLocked" disabled style="opacity:.5; cursor:not-allowed;">Next</button>
+          </div>
+        </section>
+
+        <section class="page" data-title="Plan">
+          <h1>Monu, date ka vibe choose karo</h1>
+          <p class="muted">Tum choose karo, Dharya plan karega.</p>
+
+          <div class="choices" id="choices">
+            <div class="choice" data-v="Coffee + Walk">
+              <div class="t">Coffee + walk</div>
+              <p class="d">Soft, simple, cute—sirf tum aur main</p>
+            </div>
+            <div class="choice" data-v="Movie + Snacks">
+              <div class="t">Movie + snacks</div>
+              <p class="d">Thoda filmy, thoda cozy</p>
+            </div>
+            <div class="choice" data-v="Dinner + Photos">
+              <div class="t">Dinner + photos</div>
+              <p class="d">Thoda classy, thoda “wow”</p>
+            </div>
+          </div>
+
+          <div class="stamp" id="pickedStamp" style="display:none;">✅ Picked: <span id="pickedText"></span></div>
+
+          <div class="nav">
+            <button class="btn-ghost" data-go="back">Back</button>
+            <button class="btn-next" data-go="next" id="planNext" disabled style="opacity:.5; cursor:not-allowed;">Next</button>
+          </div>
+        </section>
+
+        <section class="page" data-title="Question">
+          <h1>Okay Monu… final question 😌</h1>
+          <p class="muted">Dharya ki taraf se, dil se:</p>
+
+          <h2>Will you be my Valentine?</h2>
+
+          <div class="askArea" id="askArea">
+            <div class="askBtns">
+              <button id="yesBtn" class="btn-yes" type="button">Yes, Dharya ❤️</button>
+            </div>
+            <button id="noBtn" class="btn-no" type="button" aria-label="No">No</button>
+          </div>
+
+          <div class="noteLine" id="noNote"></div>
+
+          <div class="nav">
+            <button class="btn-ghost" data-go="back">Back</button>
+            <button class="btn-accent" data-go="next">Skip (cheater 😄)</button>
+          </div>
+        </section>
+
+        <section class="page" data-title="Yay">
+          <h1>Yayyyyy Monu! 💗</h1>
+          <p>Ab official ho gaya—Monu (Muskan) + Dharya = Valentine team.</p>
+          <div class="stamp">💌 Your vibe: <span id="finalVibe">—</span></div>
+          <p class="muted" style="margin-top:10px;">Screenshot leke mujhe bhejna 😄</p>
+
+          <div class="nav">
+            <button class="btn-ghost" data-go="back">Back</button>
+            <button class="btn-next" id="moreHearts" type="button">More hearts</button>
+          </div>
+        </section>
+
+      </div>
     </div>
-
-    <div class="hint" id="hint"></div>
-    <div class="celebrate" id="celebrate"></div>
   </div>
 
   <script>
+    const pages = [...document.querySelectorAll(".page")];
+    const dotsEl = document.getElementById("dots");
+    let idx = 0;
+
+    function renderDots(){
+      dotsEl.innerHTML = "";
+      pages.forEach((_, i) => {
+        const d = document.createElement("div");
+        d.className = "dot" + (i === idx ? " on" : "");
+        dotsEl.appendChild(d);
+      });
+    }
+
+    function show(i){
+      idx = Math.max(0, Math.min(pages.length - 1, i));
+      pages.forEach((p, k) => p.classList.toggle("active", k === idx));
+      renderDots();
+    }
+    renderDots();
+
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-go]");
+      if(!btn) return;
+      const go = btn.getAttribute("data-go");
+      if(go === "next") show(idx + 1);
+      if(go === "back") show(idx - 1);
+    });
+
+    const pass = document.getElementById("pass");
+    const secretText = document.getElementById("secretText");
+    const revealBtn = document.getElementById("revealBtn");
+    const nextLocked = document.getElementById("nextLocked");
+    let revealed = false;
+
+    function tryReveal(){
+      const v = (pass.value || "").trim().toLowerCase();
+      if(v === "monu"){
+        revealed = true;
+        secretText.classList.remove("blur");
+        nextLocked.disabled = false;
+        nextLocked.style.opacity = "1";
+        nextLocked.style.cursor = "pointer";
+      }
+    }
+    pass?.addEventListener("input", tryReveal);
+    revealBtn?.addEventListener("click", () => {
+      tryReveal();
+      if(!revealed){
+        revealBtn.textContent = "Type monu 🙂";
+        setTimeout(()=>revealBtn.textContent="Reveal", 900);
+      }
+    });
+
+    const choices = document.getElementById("choices");
+    const pickedStamp = document.getElementById("pickedStamp");
+    const pickedText = document.getElementById("pickedText");
+    const planNext = document.getElementById("planNext");
+    let vibe = "";
+
+    choices?.addEventListener("click", (e) => {
+      const c = e.target.closest(".choice");
+      if(!c) return;
+      vibe = c.getAttribute("data-v");
+      [...document.querySelectorAll(".choice")].forEach(x=>x.classList.remove("on"));
+      c.classList.add("on");
+      pickedStamp.style.display = "inline-flex";
+      pickedText.textContent = vibe;
+      planNext.disabled = false;
+      planNext.style.opacity = "1";
+      planNext.style.cursor = "pointer";
+    });
+
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
-    const hint = document.getElementById("hint");
-    const celebrate = document.getElementById("celebrate");
-    const nameInput = document.getElementById("nameInput");
+    const noNote = document.getElementById("noNote");
+    const finalVibe = document.getElementById("finalVibe");
 
-    function moveNoButton() {
-      const padding = 16;
+    function moveNo(){
+      if(!noBtn) return;
+      const pad = 14;
       const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
       const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+      const bw = noBtn.offsetWidth, bh = noBtn.offsetHeight;
 
-      const bw = noBtn.offsetWidth;
-      const bh = noBtn.offsetHeight;
-
-      const x = Math.floor(Math.random() * (vw - bw - padding*2)) + padding;
-      const y = Math.floor(Math.random() * (vh - bh - padding*2)) + padding;
+      const x = Math.floor(Math.random() * (vw - bw - pad*2)) + pad;
+      const y = Math.floor(Math.random() * (vh - bh - pad*2)) + pad;
 
       noBtn.style.left = x + "px";
       noBtn.style.top  = y + "px";
       noBtn.style.transform = "none";
 
-      hint.textContent = "Oops… No button bhaag gaya 🙂";
+      const msgs = [
+        "Monu please 😭",
+        "No button bhi sharma gaya 😄",
+        "Dharya trying again…",
+        "Acha naaa… ek haan toh banta hai 😌"
+      ];
+      if(noNote) noNote.textContent = msgs[Math.floor(Math.random()*msgs.length)];
     }
 
-    // Make it run away on hover (desktop) and touch (mobile)
-    noBtn.addEventListener("mouseenter", moveNoButton);
-    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNoButton(); }, { passive:false });
+    noBtn?.addEventListener("mouseenter", moveNo);
+    noBtn?.addEventListener("touchstart", (e)=>{ e.preventDefault(); moveNo(); }, {passive:false});
+    noBtn?.addEventListener("click", (e)=>{ e.preventDefault(); moveNo(); });
 
-    // If they somehow click No, just move it and do nothing else
-    noBtn.addEventListener("click", (e) => { e.preventDefault(); moveNoButton(); });
-
-    yesBtn.addEventListener("click", () => {
-      const n = (nameInput.value || "").trim();
-      const who = n ? (n + "! ") : "";
-      celebrate.style.display = "block";
-      celebrate.textContent = who + "Yayyy! Date fix? 💌";
-      hint.textContent = "";
-
-      // mini hearts burst
-      for (let i=0; i<16; i++){
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.textContent = "❤";
-        heart.style.left = (Math.random()*100) + "vw";
-        heart.style.top  = (60 + Math.random()*20) + "vh";
-        heart.style.animationDelay = (Math.random()*0.2) + "s";
-        document.body.appendChild(heart);
-        setTimeout(()=>heart.remove(), 2000);
+    function heartsBurst(n=24){
+      const hearts = ["❤","💗","💖","💞","💕"];
+      for(let i=0;i<n;i++){
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+        h.style.left = (Math.random()*100) + "vw";
+        h.style.top  = (64 + Math.random()*18) + "vh";
+        h.style.fontSize = (14 + Math.random()*26) + "px";
+        h.style.animationDelay = (Math.random()*0.2) + "s";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(), 2400);
       }
+    }
+
+    yesBtn?.addEventListener("click", () => {
+      finalVibe.textContent = vibe || "Anything with you";
+      heartsBurst(30);
+      show(5);
     });
 
-    // Initial position if CSS absolute looks off on some screens
-    window.addEventListener("load", () => {
-      noBtn.style.top = "0px";
-    });
+    document.getElementById("moreHearts")?.addEventListener("click", ()=>heartsBurst(26));
   </script>
 </body>
 </html>
